@@ -46,10 +46,6 @@
 
 	$: $signUpModal = defaultModal;
 
-	const handleSubmit = () => {
-		alert('Form submited.');
-	};
-
 	let countries = [
 		{ value: 'United States', name: 'United States' },
 		{ value: 'Europe', name: 'Europe' },
@@ -189,7 +185,6 @@
 				},
 				body: JSON.stringify(data)
 			});
-			alert('Form submitted');
 		} catch (error) {
 			slide = 104;
 			showAll = true;
@@ -231,18 +226,9 @@
 		<div
 			class="mb-8 mt-4 flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-x-4 sm:space-y-0 lg:mb-16"
 		>
-			<a href="/signup">
-				<Button size="lg">
-					Join Today <ArrowRightSolid size="md" class="-mr-1 ml-2" />
-				</Button>
-			</a>
-			<a href="/">
-				<!-- <Button size="lg" color="light">
-					<VideoSolid size="xs" class="-ml-1 mr-2" />
-					Watch video
-				</Button>
-			</a> -->
-			</a>
+			<Button size="lg" on:click={toggleModal}>
+				Join Today <ArrowRightSolid size="md" class="-mr-1 ml-2" />
+			</Button>
 		</div>
 	</Section>
 </div>
@@ -339,13 +325,13 @@
 				Avoid high currency exchange conversion rates with Wavelink. No exchange fee during
 				processing
 			</p>
-			<a
-				href="/signup"
+			<button
+				on:click={toggleModal}
 				class="inline-flex items-center rounded-lg bg-primary-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900"
 			>
 				Get started
 				<ArrowRightSolid size="md" class="-mr-1 ml-2" />
-			</a>
+			</button>
 		</Cta>
 	</Section>
 </div>
@@ -409,9 +395,9 @@
 			<div class="mt-3 sm:pe-8">
 				<h3 class="text-lg font-semibold text-gray-900 dark:text-white">Step 2 : Fill the Form</h3>
 				<p class="text-base font-normal text-gray-500 dark:text-gray-400">
-					Fill up the sign up form using your real details and mobile numbers which are in use. <a
-						href="/signup"
-						class="underline">Click Here</a
+					Fill up the sign up form using your real details and mobile numbers which are in use. <button
+						on:click={toggleModal}
+						class="underline">Click Here</button
 					> to get to the application
 				</p>
 			</div>
@@ -516,7 +502,7 @@
 		<p>International Rates Will be at <strong>5%</strong></p>
 		<p>Domestic Rates Will Start From <strong>2.5%</strong></p>
 		<div class="flex w-full items-center justify-center pt-4">
-			<Button class="w-fit" href="/signup">
+			<Button class="w-fit" on:click={toggleModal}>
 				Create an Account <ArrowRightOutline class="ms-2 h-3.5 w-3.5 text-white" />
 			</Button>
 		</div>
