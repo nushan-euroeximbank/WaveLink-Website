@@ -24,10 +24,10 @@
 		ArrowRightOutline,
 		InfoCircleSolid,
 		ChartSolid,
-		LandmarkSolid,
-		BriefcaseSolid,
 		DollarSolid,
-		RocketSolid
+		CashSolid,
+		SalePercentSolid,
+		EnvelopeSolid
 	} from 'flowbite-svelte-icons';
 
 	import { signUpModal } from '$lib/stores';
@@ -263,7 +263,7 @@
 			</FeatureItem>
 			<FeatureItem>
 				<svelte:fragment slot="icon"
-					><LandmarkSolid class="text-primary-600 dark:text-primary-300" /></svelte:fragment
+					><CashSolid class="text-primary-600 dark:text-primary-300" /></svelte:fragment
 				>
 				<svelte:fragment slot="h3">No Currency Fee</svelte:fragment>
 				<svelte:fragment slot="paragraph"
@@ -272,7 +272,7 @@
 			</FeatureItem>
 			<FeatureItem>
 				<svelte:fragment slot="icon"
-					><BriefcaseSolid class="text-primary-600 dark:text-primary-300" /></svelte:fragment
+					><SalePercentSolid class="text-primary-600 dark:text-primary-300" /></svelte:fragment
 				>
 				<svelte:fragment slot="h3">Versatile</svelte:fragment>
 				<svelte:fragment slot="paragraph"
@@ -290,7 +290,7 @@
 			</FeatureItem>
 			<FeatureItem>
 				<svelte:fragment slot="icon"
-					><RocketSolid class="text-primary-600 dark:text-primary-300" /></svelte:fragment
+					><EnvelopeSolid class="text-primary-600 dark:text-primary-300" /></svelte:fragment
 				>
 				<svelte:fragment slot="h3">No hidden fees</svelte:fragment>
 				<svelte:fragment slot="paragraph"
