@@ -7,17 +7,200 @@
 		FeatureItem,
 		Cta
 	} from 'flowbite-svelte-blocks';
-	import { Button, Card } from 'flowbite-svelte';
+	import {
+		Button,
+		Card,
+		Label,
+		Input,
+		Modal,
+		Textarea,
+		Select,
+		Radio,
+		Alert
+	} from 'flowbite-svelte';
+
 	import {
 		ArrowRightSolid,
 		ArrowRightOutline,
-		VideoSolid,
+		InfoCircleSolid,
 		ChartSolid,
 		LandmarkSolid,
 		BriefcaseSolid,
 		DollarSolid,
 		RocketSolid
 	} from 'flowbite-svelte-icons';
+
+	import { signUpModal } from '$lib/stores';
+
+	let defaultModal = false;
+
+	let dismissable = false;
+
+	signUpModal.subscribe((value) => {
+		defaultModal = value;
+	});
+
+	const toggleModal = () => {
+		signUpModal.update((value) => !value);
+	};
+
+	$: $signUpModal = defaultModal;
+
+	const handleSubmit = () => {
+		alert('Form submited.');
+	};
+
+	let countries = [
+		{ value: 'United States', name: 'United States' },
+		{ value: 'Europe', name: 'Europe' },
+		{ value: 'Africa', name: 'Africa' },
+		{ value: 'India', name: 'India' }
+	];
+
+	// Company Administrator, Senior Manager, Employee, Contractor, Director, Owner, Other
+	let roles = [
+		{ value: 'Company Administrator', name: 'Company Administrator' },
+		{ value: 'Senior Manager', name: 'Senior Manager' },
+		{ value: 'Employee', name: 'Employee' },
+		{ value: 'Contractor', name: 'Contractor' },
+		{ value: 'Director', name: 'Director' },
+		{ value: 'Owner', name: 'Owner' },
+		{ value: 'Other', name: 'Other' }
+	];
+
+	let data = {
+		// S1
+		geoArea: '',
+		paymentType: '',
+		// S2
+		fullName: '',
+		email: '',
+		country: '',
+		state: '',
+		city: '',
+		zip: '',
+		phone: '',
+		// S3
+		businessName: '',
+		registeredAddress: '',
+		businessAddress: '',
+		websiteURL: '',
+		// S4
+		businessDescription: '',
+		yourRole: '',
+		otherRole: ''
+	};
+
+	let errorMessage = '';
+
+	let slide = 1;
+	let showAll = false;
+
+	const nextSlide = () => {
+		if (slide === 1 && data.geoArea === '') {
+			errorMessage = 'Please select the area of operations';
+			return;
+		}
+		if (slide === 1 && data.paymentType === '') {
+			errorMessage = 'Please select the payment type';
+			return;
+		}
+		if (slide === 2 && data.fullName === '') {
+			errorMessage = 'Please enter your full name';
+			return;
+		}
+		if (slide === 2 && data.email === '') {
+			errorMessage = 'Please enter your email address';
+			return;
+		}
+		if (slide === 2 && data.country === '') {
+			errorMessage = 'Please enter your country';
+			return;
+		}
+		if (slide === 2 && data.state === '') {
+			errorMessage = 'Please enter your state';
+			return;
+		}
+		if (slide === 2 && data.city === '') {
+			errorMessage = 'Please enter your city';
+			return;
+		}
+		if (slide === 2 && data.zip === '') {
+			errorMessage = 'Please enter your zip code';
+			return;
+		}
+		if (slide === 2 && data.phone === '') {
+			errorMessage = 'Please enter your phone number';
+			return;
+		}
+		if (slide === 3 && data.businessName === '') {
+			errorMessage = 'Please enter your business name';
+			return;
+		}
+		if (slide === 3 && data.registeredAddress === '') {
+			errorMessage = 'Please enter your registered address';
+			return;
+		}
+		if (slide === 3 && data.businessAddress === '') {
+			errorMessage = 'Please enter your business address';
+			return;
+		}
+		if (slide === 3 && data.websiteURL === '') {
+			errorMessage = 'Please enter your website URL';
+			return;
+		}
+		if (slide === 4 && data.businessDescription === '') {
+			errorMessage = 'Please enter your business description';
+			return;
+		}
+		if (slide === 4 && data.yourRole === '') {
+			errorMessage = 'Please enter your role';
+			return;
+		}
+		if (slide === 4 && data.yourRole === 'Other' && data.otherRole === '') {
+			errorMessage = 'Please enter your role';
+			return;
+		}
+
+		if (slide === 4) {
+			showAll = true;
+		}
+		errorMessage = '';
+		slide += 1;
+	};
+
+	const prevSlide = () => {
+		if (slide === 1) return;
+		if (slide === 5) {
+			showAll = false;
+		}
+		slide -= 1;
+	};
+
+	let FORMSPARK_ACTION_URL = 'https://submit-form.com/gqyflXzr';
+
+	const onSubmit = async () => {
+		try {
+			await fetch(FORMSPARK_ACTION_URL, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					Accept: 'application/json'
+				},
+				body: JSON.stringify(data)
+			});
+			alert('Form submitted');
+		} catch (error) {
+			slide = 104;
+			showAll = true;
+			errorMessage = 'Something went wrong while submitting the form. Please try again later.';
+			dismissable = true;
+		} finally {
+			slide = 200;
+			showAll = false;
+			dismissable = true;
+		}
+	};
 </script>
 
 <svelte:head>
@@ -339,3 +522,240 @@
 		</div>
 	</Card>
 </div>
+
+<!-- Signup Form -->
+<Modal title="Sign Up Form" bind:open={defaultModal} {dismissable} class="min-w-full">
+	<form on:submit={onSubmit}>
+		<input type="hidden" name="_email.subject" value="Wave-Link Registration Information" />
+		<input type="hidden" name="_email.from" value="Wave-Link Pay" />
+		<input type="hidden" name="_feedback.whitelabel" value="true" />
+		<input
+			type="hidden"
+			name="_feedback.success.title"
+			value="Your Application has been submitted successfully"
+		/>
+		{#if errorMessage}
+			<Alert color="red" class="mb-4">
+				<InfoCircleSolid slot="icon" class="h-4 w-4" />
+				<span class="font-medium">Error!</span>
+				{errorMessage}
+			</Alert>
+		{/if}
+		{#if showAll}
+			<h2 class="mb-4 text-2xl font-semibold">Review Your Form</h2>
+		{/if}
+		{#if slide === 1 || showAll}
+			<div class="mb-4 grid grid-cols-1 gap-4 md:grid-cols-2">
+				<div>
+					<Label>
+						Select the area of Operations
+						<Select class="mt-2" bind:value={data.geoArea} items={countries} required />
+						<input type="hidden" name="GeoLocation" value={data.geoArea} />
+					</Label>
+				</div>
+				<div class=" col-span-2">
+					<p class="mb-5 text-gray-900 dark:text-white">Accept Payments with Euro Exim Bank As</p>
+					<div class="grid w-full gap-6 md:grid-cols-2">
+						<Radio
+							name="Payment Type"
+							value="Individual"
+							bind:group={data.paymentType}
+							custom
+							required
+						>
+							<div
+								class="inline-flex h-full w-full cursor-pointer items-center justify-between rounded-lg border border-gray-200 bg-white p-5 text-gray-500 hover:bg-gray-100 hover:text-gray-600 peer-checked:border-primary-600 peer-checked:text-primary-600 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:peer-checked:text-primary-500"
+							>
+								<div class="block">
+									<div class="w-full text-lg font-semibold">An Individual</div>
+									<div class="w-full">For freelanceres, sole traders and unregistered business</div>
+								</div>
+								<ArrowRightOutline class="ms-3 h-6 w-6" />
+							</div>
+						</Radio>
+						<Radio
+							name="Payment Type"
+							value="Business"
+							bind:group={data.paymentType}
+							custom
+							required
+						>
+							<div
+								class="inline-flex h-full w-full cursor-pointer items-center justify-between rounded-lg border border-gray-200 bg-white p-5 text-gray-500 hover:bg-gray-100 hover:text-gray-600 peer-checked:border-primary-600 peer-checked:text-primary-600 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:peer-checked:text-primary-500"
+							>
+								<div class="block">
+									<div class="w-full text-lg font-semibold">
+										As a registered business, non-profit or NGO
+									</div>
+									<div class="w-full">
+										Your Business is registered and you have a Business Bank Account
+									</div>
+								</div>
+								<ArrowRightOutline class="ms-3 h-6 w-6" />
+							</div>
+						</Radio>
+					</div>
+				</div>
+			</div>
+		{/if}
+		{#if slide === 2 || showAll}
+			<h2 class="mb-4 text-2xl font-semibold">Personal Information (2/4)</h2>
+			<div class="mb-4 grid grid-cols-1 gap-4 md:grid-cols-2">
+				<div>
+					<Label for="Full Name" class="mb-2">Full Name</Label>
+					<Input
+						type="text"
+						id="Full Name"
+						placeholder="John Doe"
+						bind:value={data.fullName}
+						required
+					/>
+				</div>
+				<div>
+					<Label for="Email" class="mb-2">Email Address</Label>
+					<Input
+						type="email"
+						id="Email"
+						placeholder="Someone@email.com"
+						bind:value={data.email}
+						required
+					/>
+				</div>
+				<div>
+					<Label for="Country" class="mb-2">What Country Are You From?</Label>
+					<Input
+						type="text"
+						id="Country"
+						placeholder="United States"
+						bind:value={data.country}
+						required
+					/>
+				</div>
+				<div>
+					<Label for="State" class="mb-2">Which State are you based on?</Label>
+					<Input type="text" id="State" placeholder="New York" bind:value={data.state} required />
+				</div>
+				<div>
+					<Label for="City" class="mb-2">What City are you based on?</Label>
+					<Input
+						type="text"
+						id="City"
+						placeholder="New York City"
+						bind:value={data.city}
+						required
+					/>
+				</div>
+				<div>
+					<Label for="ZIP Code" class="mb-2">What is your PIN / ZIP Code?</Label>
+					<Input type="text" id="ZIP Code" placeholder="10001" bind:value={data.zip} required />
+				</div>
+				<div>
+					<Label for="phone" class="mb-2">Enter Your Mobile Number</Label>
+					<Input type="tel" id="phone" placeholder="123-456-789" bind:value={data.phone} required />
+				</div>
+			</div>
+		{/if}
+		{#if slide === 3 || showAll}
+			<h2 class="mb-4 text-2xl font-semibold">Business Information (3/4)</h2>
+			<div class="mb-4 grid grid-cols-1 gap-4 md:grid-cols-2">
+				<div>
+					<Label for="Business Name" class="mb-2">Business Name</Label>
+					<Input
+						type="text"
+						id="Business Name"
+						placeholder="John Doe"
+						bind:value={data.businessName}
+						required
+					/>
+				</div>
+				<div>
+					<Label for="Registered Address" class="mb-2">Registered Address</Label>
+					<Input
+						type="text"
+						id="Registered Address"
+						placeholder="123, 5th Avenue"
+						bind:value={data.registeredAddress}
+						required
+					/>
+				</div>
+				<div>
+					<Label for="Business Address" class="mb-2">Business Address</Label>
+					<Input
+						type="text"
+						id="Business Address"
+						placeholder="123, 5th Avenue"
+						bind:value={data.businessAddress}
+						required
+					/>
+				</div>
+				<div>
+					<Label for="Website URL" class="mb-2">Website URL</Label>
+					<Input
+						type="url"
+						id="Website URL"
+						placeholder="https://www.example.com"
+						bind:value={data.websiteURL}
+						required
+					/>
+				</div>
+			</div>
+		{/if}
+		{#if slide === 4 || showAll}
+			<h2 class="mb-4 text-2xl font-semibold">Business Description (4/4)</h2>
+			<div class="mb-4">
+				<Label for="Business Description" class="mb-2">Business Description</Label>
+				<Textarea
+					id="Business Description"
+					placeholder="Describe your business in a few words"
+					bind:value={data.businessDescription}
+					required
+				/>
+			</div>
+			<div class="mb-4">
+				<Label for="Your Role" class="mb-2">Your Role</Label>
+				<Select class="mt-2" bind:value={data.yourRole} items={roles} required />
+			</div>
+			{#if data.yourRole === 'Other'}
+				<div class="mb-4">
+					<Label for="Other Role" class="mb-2">Please Enter Your Role</Label>
+					<Input
+						type="text"
+						id="Other Role"
+						placeholder="Freelancer"
+						bind:value={data.otherRole}
+						required
+					/>
+				</div>
+			{/if}
+		{/if}
+		{#if slide === 104}
+			<div class="mb-4">
+				<Alert color="red">
+					<InfoCircleSolid slot="icon" class="h-4 w-4" />
+					<span class="font-medium">Error!</span>
+					{errorMessage}
+				</Alert>
+			</div>
+		{/if}
+		{#if slide === 200}
+			<div class="mb-4">
+				<Alert color="green">
+					<InfoCircleSolid slot="icon" class="h-4 w-4" />
+					<span class="font-medium">Success!</span>
+					Your application has been submitted successfully
+				</Alert>
+			</div>
+		{/if}
+		{#if slide < 100}
+			<div class="mt-8 flex w-full flex-row justify-between">
+				<Button color="alternative" on:click={prevSlide}>Previous</Button>
+				{#if slide === 5}
+					<Button type="submit">Submit</Button>
+				{/if}
+				{#if slide < 5}
+					<Button on:click={nextSlide}>Next</Button>
+				{/if}
+			</div>
+		{/if}
+	</form>
+</Modal>

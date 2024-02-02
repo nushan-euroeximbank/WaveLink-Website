@@ -1,6 +1,5 @@
 <script>
 	import '../app.pcss';
-	import { Section } from 'flowbite-svelte-blocks';
 	import {
 		Navbar,
 		NavBrand,
@@ -10,10 +9,14 @@
 		Footer,
 		FooterBrand,
 		FooterLinkGroup,
-		FooterLink,
-		FooterCopyright,
-		FooterIcon
+		FooterLink
 	} from 'flowbite-svelte';
+
+	import { signUpModal } from '$lib/stores';
+
+	const toggleModal = () => {
+		signUpModal.update((value) => !value);
+	};
 </script>
 
 <div class="fixed left-0 right-0 top-0 z-10">
@@ -28,7 +31,11 @@
 		<NavUl>
 			<NavLi href="/">Home</NavLi>
 			<NavLi href="/#pricing">Pricing</NavLi>
-			<NavLi href="/signup">Sign Up</NavLi>
+			<NavLi
+				on:click={() => {
+					toggleModal();
+				}}>Sign Up</NavLi
+			>
 		</NavUl>
 	</Navbar>
 </div>
