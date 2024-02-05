@@ -208,8 +208,15 @@
 	class="flex h-screen flex-row items-center justify-center bg-[url('https://unsplash.com/photos/axAbxUA32hE/download?ixid=M3wxMjA3fDF8MXxhbGx8MXx8fHx8fDJ8fDE3MDY3OTc4MTh8&force=true&w=1920')] bg-cover"
 >
 	<Section name="heroDefault">
-		<div class="mb-4">
-			<News href="/signup">
+		<!-- svelte-ignore a11y-click-events-have-key-events -->
+		<!-- svelte-ignore a11y-no-static-element-interactions -->
+		<div
+			class="mb-4"
+			on:click={() => {
+				toggleModal();
+			}}
+		>
+			<News>
 				<span class="mr-3 rounded-full bg-primary-600 px-4 py-1.5 text-xs text-white">New</span>
 				<span class="text-sm font-medium">Support in New Geographical Areas</span>
 			</News>
