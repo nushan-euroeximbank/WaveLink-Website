@@ -205,39 +205,31 @@
 <!-- Hero Section -->
 
 <div
-	class="flex h-screen flex-row items-center justify-center bg-[url('https://unsplash.com/photos/axAbxUA32hE/download?ixid=M3wxMjA3fDF8MXxhbGx8MXx8fHx8fDJ8fDE3MDY3OTc4MTh8&force=true&w=1920')] bg-cover"
+	class="flex h-screen flex-row items-center justify-start bg-[url('https://unsplash.com/photos/PypjzKTUqLo/download?ixid=M3wxMjA3fDB8MXxzZWFyY2h8MzV8fHRhYmxlfGVufDB8MHx8fDE3MDg0OTQwMTV8MA&force=true&w=1920')] bg-cover"
 >
-	<Section name="heroDefault">
-		<!-- svelte-ignore a11y-click-events-have-key-events -->
-		<!-- svelte-ignore a11y-no-static-element-interactions -->
-		<div
-			class="mb-4"
-			on:click={() => {
-				toggleModal();
-			}}
-		>
-			<News>
-				<span class="mr-3 rounded-full bg-primary-600 px-4 py-1.5 text-xs text-white">New</span>
-				<span class="text-sm font-medium">Support in New Geographical Areas</span>
-			</News>
-		</div>
-		<HeroHeader pClass="text-white mix-blend-exclusion">
-			<svelte:fragment slot="h1">The Key To A Universe Of Possibilities</svelte:fragment>
-			<svelte:fragment slot="paragraph"
-				>Your Wavelink account is the key that opens a world of possibilities. Wavelink connects
-				your business to the world, whether it’s making international payments, receiving funds,
-				managing your digital business, or accessing capital.</svelte:fragment
-			>
-		</HeroHeader>
-
-		<div
-			class="mb-8 mt-4 flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-x-4 sm:space-y-0 lg:mb-16"
-		>
-			<Button size="lg" on:click={toggleModal}>
-				Join Today <ArrowRightSolid size="md" class="-mr-1 ml-2" />
-			</Button>
-		</div>
-	</Section>
+	<!-- svelte-ignore a11y-click-events-have-key-events -->
+	<!-- svelte-ignore a11y-no-static-element-interactions -->
+	<div class="flex w-full flex-col justify-start gap-4 p-8 opacity-80 md:w-2/5">
+		<h1 class="text-left text-4xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
+			The Key To A Universe Of Possibilities
+		</h1>
+		<p class="mt-4 text-left dark:text-gray-400">
+			Your Wavelink account is the key that opens a world of possibilities. Wavelink connects your
+			business to the world, whether it’s making international payments, receiving funds, managing
+			your digital business, or accessing capital.
+		</p>
+		<!-- <HeroHeader pClass="text-white mix-blend-exclusion text-left">
+				<svelte:fragment slot="h1">The Key To A Universe Of Possibilities</svelte:fragment>
+				<svelte:fragment slot="paragraph"
+					>Your Wavelink account is the key that opens a world of possibilities. Wavelink connects
+					your business to the world, whether it’s making international payments, receiving funds,
+					managing your digital business, or accessing capital.</svelte:fragment
+				>
+			</HeroHeader> -->
+		<Button size="lg" on:click={toggleModal} color="yellow" class="w-48">
+			Join Today <ArrowRightSolid size="md" class="-mr-1 ml-2" />
+		</Button>
+	</div>
 </div>
 
 <!-- Services Section -->
