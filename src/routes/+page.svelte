@@ -339,7 +339,7 @@
 <div class="flex min-h-screen flex-col items-center justify-center p-4">
 	<h2 class="text-3xl font-bold">Easy functionality</h2>
 	<p class="mb-6 max-w-4xl text-center font-light text-gray-500 dark:text-gray-400 md:text-lg">
-		Create an account from us or use your own bank account Run your business in any part of the
+		Create an account from us or use your own bank account to Run your business in any part of the
 		world in few simple clicks Operate easily for any industry
 	</p>
 
@@ -453,9 +453,9 @@
 	<h2 class="text-4xl font-bold text-black">Go Global With Wavelink</h2>
 	<p class="mb-6 max-w-3xl text-center font-light text-black md:text-lg">
 		A comprehensive platform designed to meet the needs of today's cross-border seller. Pay from any
-		of the world's, into leading marketplaces, pay your suppliers and manage multiple stores from a
-		single location. Access working capital to reinvest in your business and withdraw earnings in
-		your home currency at low interest rates.
+		of the popular global payment methods, into leading marketplaces, pay your suppliers and manage
+		multiple stores from a single location. Access working capital to reinvest in your business and
+		withdraw earnings in your home currency at low interest rates.
 	</p>
 	<div class="flex flex-row gap-4">
 		<Card
